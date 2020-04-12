@@ -118,7 +118,7 @@ int		CreateSocker(const char* port) {
 			return -2;
 		}
 
-		if (bind(sock, p->ai_addr, p->ai_addrlen) == -1) {
+		if (::bind(sock, p->ai_addr, p->ai_addrlen) == -1) {
 			// close(sock);
 			continue;
 		}
