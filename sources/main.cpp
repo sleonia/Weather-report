@@ -9,17 +9,39 @@
 #include <time.h>
 #include <errno.h>
 #include <arpa/inet.h>
+#include <stdio.h>
+#include <unistd.h>
 
 using namespace std;
 
 #define SERVER_PORT		"8000"
 #define MAX_CONNECTION	1000
 
-int		CreateSocker(const char* port);
-void*	getClientAddr(struct sockaddr* sa);
+enum eHTTPMethod {
+	eHTTP_UNKNOWN = 0,
+	eHTTP_CONNECT,
+	eHTTP_DELETE,
+	eHTTP_GET,
+	eHTTP_HEAD,
+	eHTTP_OPTIONS,
+	eHTTP_PATCH,
+	eHTTP_POST,
+	eHTTP_PUT,
+	eHTTP_TRACE
+};
+
+struct	sHTTPHeader {
+	eHTTPMethod	type;
+	char		path[255]; //string?
+};
+
+int		CreateSocker(const char*);
+void*	getClientAddr(struct sockaddr*);
 
 void	HttpRequest(int);
-void	ParseHttpRequest(const char*);
+void	ParseHttpRequest(const char*, sHTTPHeader*);
+void	SendMessage(int, const char*);
+void	Send404(int);
 
 int		main() {
 	int sock = CreateSocker(SERVER_PORT);
@@ -46,6 +68,9 @@ int		main() {
 		char ip[INET6_ADDRSTRLEN];
 		inet_ntop(client_addr.ss_family, getClientAddr((struct sockaddr *)&client_addr), ip, sizeof ip);
 		cout << "Server: got connection from " << ip << endl;
+
+		HttpRequest(client_id);
+		close(client_id);
 	}
 
 	return 0;
@@ -114,3 +139,80 @@ int		CreateSocker(const char* port) {
 
 	return sock;
 }
+
+void	HttpRequest(int aSock) {
+	const int	request_buf_size = 65536;
+	char		request[request_buf_size];
+
+	int bytes_recvd = recv(aSock, request, request_buf_size - 1, 0);
+
+	if (bytes_recvd < 0) {
+		cerr << "Error recv" << endl;
+		return ;
+	}
+	request[bytes_recvd] = '\0';
+
+	cout << "Request:" << endl << request << endl;
+
+	sHTTPHeader req;
+
+	ParseHttpRequest(request, &req);
+
+	if (req.type == eHTTP_GET) {
+		SendMessage(aSock, "sensor 1: 10<br> sensor 2: 20<br><a href=\"http://cppprosto.blogspot.com/2017/09/blog-post_23.html\">external</a><br><a href=\"internal\">internal</a>");
+	} else {
+		Send404(aSock);
+	}
+}
+
+void ParseHttpRequest(const char* apstrRequest, sHTTPHeader* apHeader)
+{
+  int  type_length = 0;
+  char type[255]   = {0};
+  int  index = 0;
+
+  apHeader->type = eHTTP_UNKNOWN;
+
+  sscanf(&apstrRequest[index], "%s", type);
+  type_length = strlen(type);
+
+  if(type_length == 3)
+  {
+    if(type[0] == 'G' && type[1] == 'E' && type[2] == 'T')
+      apHeader->type = eHTTP_GET;
+
+    index += type_length + 1;
+    sscanf(&apstrRequest[index], "%s", apHeader->path);
+  }
+}
+
+void	SendMessage(int aSock, const char *apStrMessage)
+{
+	char buffer[65536] = {0};
+
+	strcat(buffer, "HTTP/1.1 200 OK\n\n");
+	strcat(buffer, "<h1>");
+	strcat(buffer, apStrMessage);
+	strcat(buffer, "</h1>");
+
+	int len = strlen(buffer);
+	send(aSock, buffer, len, 0);
+}
+
+void	Send404(int aSock) {
+	const char* buffer = "HTTP/1.1 404 \n\n";
+	int			len = strlen(buffer);
+	send(aSock, buffer, len, 0);
+}
+
+// server: got connection from 127.0.0.1
+// request:
+// GET /index.html HTTP/1.1
+// Host: localhost:3490
+// Connection: keep-alive
+// Upgrade-Insecure-Requests: 1
+// User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/68.0.3440.75 Chrome/68.0.3440.75 Safari/537.36
+// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+// Accept-Encoding: gzip, deflate, br
+// Accept-Language: en-US,en;q=0.9,ru;q=0.8
+
