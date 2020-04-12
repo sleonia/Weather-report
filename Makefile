@@ -12,7 +12,8 @@ OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 SRC_NAME = main.cpp
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
 
-FLAGS = -std=c++11 -Wall -Werror -Wextra
+FLAGS = -std=c++11
+# FLAGS = -std=c++11 -Wall -Werror -Wextra
 
 all: $(NAME)
 
