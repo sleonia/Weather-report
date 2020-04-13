@@ -1,0 +1,58 @@
+<!DOCTYPE html >
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<style type="text/css">
+
+html, body {margin:0; padding:0; width:100%; height:100%; overflow:hidden; text-align:left;}
+body {font-family: 'Tinos', serif;}
+#background{position:absolute; z-index:0; width:100%; height:100%;}
+/* #fixed {position:absolute; top:25px; left:10px; width:160px; z-index:10; color:#333; padding:10px;} */
+/* #scroller {position:absolute; width:100%; height:100%; top:0; left:0; overflow:auto; z-index:2;}  */
+/* #content {padding:20px 20px 20px 200px;} */
+/* p {font-size:16px; text-align:justify; line-height:25px; text-shadow: 0 1px 2px rgba(0,0,0,0.5), 0px -1px 2px rgba(255,255,255,0.8);} */
+/* h1 {font-family: 'Salsa', cursive; font-size:50px; color:#248; padding-left:1.5%; text-shadow: 0 5px 10px rgba(0,0,0,0.5), 0px -5px 10px rgba(255,255,255,0.8);} */
+/* h2 {font-family: 'Salsa', cursive; font-size:40px; color:#248; padding-left:1.5%; text-shadow: 0 4px 8px rgba(0,0,0,0.5), 0px -4px 8px rgba(255,255,255,0.8);} */
+/* h3 {font-family: 'Salsa', cursive; font-size:30px; color:#248; padding-left:1.5%; text-shadow: 0 3px 6px rgba(0,0,0,0.5), 0px -3px 6px rgba(255,255,255,0.8);} */
+/* h4 {font-family: 'Salsa', cursive; font-size:25px; color:#369; padding-left:1.5%; text-shadow: 0 2px 4px rgba(0,0,0,0.5), 0px -2px 4px rgba(255,255,255,0.8);} */
+/* .Col {width:25%; float:left; padding:2%; min-width:300px;} */
+
+</style>
+<script>
+	window.onload = function() {
+		var api = 'https://api.openweathermap.org/data/2.5/weather?q=Moscow&units=metric&mode=JSON&APPID=b5840fb02191b2f29af7bcb95b9a7eb8';
+		onclick = function() {
+
+// var outputWord.innerHTML = '';
+
+// var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
+// url += '?key=' + API_KEY;
+// url += '&text=' + document.getElementById('text').value;
+// url += '&lang=' + inputLang + '-' + outputLang;
+
+var req = new XMLHttpRequest();
+req.addEventListener('load', function () {
+	console.log(req.response);
+	var response = JSON.parse(req.response);
+
+	if (response.code !== 200) {
+		console.log('Error ' + response.message);
+		return (0);
+	}
+	if (response.text.length === 0) {
+		console.log('Word translation no');
+		return (0);
+	}
+	console.log(response.text);
+});
+	req.open('get', api);
+	req.send();
+
+}
+}
+</script>
+</head>
+<body>
+	<img alt="W3Schools" src="https://images.pexels.com/photos/212324/pexels-photo-212324.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
+</body>
+</html>

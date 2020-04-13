@@ -159,7 +159,8 @@ void	HttpRequest(int aSock) {
 	ParseHttpRequest(request, &req);
 
 	if (req.type == eHTTP_GET) {
-		SendMessage(aSock, "sensor 1: 10<br> sensor 2: 20<br><a href=\"http://cppprosto.blogspot.com/2017/09/blog-post_23.html\">external</a><br><a href=\"internal\">internal</a>");
+		SendMessage(aSock, "<p><a href=\"lorem.html\"><img src=\"image.png\"></a>Lorem ipsum dolor sit amet...</p>");
+		// SendMessage(aSock, "sensor 1: 10<br> sensor 2: 20<br><a href=\"http://cppprosto.blogspot.com/2017/09/blog-post_23.html\">external</a><br><a href=\"internal\">internal</a>");
 	} else {
 		Send404(aSock);
 	}
