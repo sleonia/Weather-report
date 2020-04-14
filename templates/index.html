@@ -1,12 +1,56 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>client</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <p>PEPEGA</p>
-  </body>
+	<head>
+	<meta charset="UTF-8">
+		<style type="text/css">
+
+html, body {margin:0; padding:0; width:100%; height:100%; overflow:hidden; text-align:left;}
+body {font-family: 'Tinos', serif;}
+#background{position:absolute; z-index:0; width:100%; height:100%;}
+
+</style>
+</head>
+<body>
+	<input type="text" size="40" id="sity" onkeyup="KeyProcessing()">
+	<input type="submit" value="Send" onclick="CreateRequest()">
+	<img alt="Pepega" src="https://images.pexels.com/photos/212324/pexels-photo-212324.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
+</body>
+<script>
+	
+	function GetDate() {
+		var d = new Date();
+		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		console.log("Today " + days[d.getDay()] + " " + d.getHours() + ":" + d.getMinutes());
+	}
+	
+	function CreateRequest() {
+		var sity = document.getElementById('sity').value;
+	
+		var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + sity + '&units=metric&mode=JSON&APPID=b5840fb02191b2f29af7bcb95b9a7eb8';
+		// var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=Moscow&units=metric&mode=JSON&APPID=b5840fb02191b2f29af7bcb95b9a7eb8';
+		var request = new XMLHttpRequest();
+		request.open('GET', requestURL);
+		request.responseType = 'json';
+		request.send();
+	
+		request.onload = function() {
+			var json = request.response;
+			console.log(json);
+			GetDate();
+			console.log("Your sity is " + json['name']);
+			console.log("Your current temperature is " + json['main']['temp']);
+		}
+	}
+
+	function KeyProcessing() {
+		var input = document.getElementById("sity");
+		if (input != null) {
+			input.addEventListener("keyup", function(event) {
+			  if (event.keyCode === 13) {
+				  CreateRequest();
+			  }
+			}); 
+		}
+	}
+</script>
 </html>
