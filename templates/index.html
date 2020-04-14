@@ -1,33 +1,85 @@
 <!DOCTYPE html >
 <html>
 	<head>
-	<meta charset="UTF-8">
+		<meta charset="UTF-8">
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 		<style type="text/css">
 
-html, body {margin:0; padding:0; width:100%; height:100%; overflow:hidden; text-align:left;}
-body {font-family: 'Tinos', serif;}
-#background{position:absolute; z-index:0; width:100%; height:100%;}
+			html, body {
+				background-image: linear-gradient(to bottom, rgba(105,0,173,1), rgba(71,34,195,1));
+				background-repeat: no-repeat;
+				height: 100%;
+			    background-repeat: no-repeat;
+			    background-attachment: fixed;
+			    margin: 0;
+			}
 
+			body {
+				font-family: 'Raleway';
+			}
+
+			#background {
+				position:absolute; z-index:0; width:100%; height:100%;
+			}
+
+			#start {
+				background-color: whitesmoke;
+				box-shadow: 5px 5px 5px #200347;
+				border-radius: 10px;
+				height: 10%;
+				width: 15%;
+
+				position: absolute;
+				margin-top: 15%;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+
+				overflow-x:hidden;
+				font-size: calc(1em + 1vw);
+			}
 </style>
 </head>
 <body>
-	<input type="text" size="40" id="sity" onkeyup="KeyProcessing()">
-	<input type="submit" value="Send" onclick="CreateRequest()">
-	<img alt="Pepega" src="https://images.pexels.com/photos/212324/pexels-photo-212324.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
+	<button id="start" onclick="GetCityValue()">Узнать погоду</button>
+	<!-- <div id="main">
+		<input type="text" size="40" id="city" onkeydown="KeyProcessing()">
+		<input type="submit" value="Send" onclick="CreateRequest()">
+	</div> -->
 </body>
 <script>
 	
-	function GetDate() {
+	function GetDate(time) {
+// 		var unix_timestamp = 1586890468
+// // Create a new JavaScript Date object based on the timestamp
+// // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+// var date = new Date(unix_timestamp * 1000);
+// // Hours part from the timestamp
+// var hours = date.getHours();
+// // Minutes part from the timestamp
+// var minutes = "0" + date.getMinutes();
+// // Seconds part from the timestamp
+// var seconds = "0" + date.getSeconds();
+
+// // Will display time in 10:30:23 format
+// var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+console.log(formattedTime);
 		var d = new Date();
-		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-		console.log("Today " + days[d.getDay()] + " " + d.getHours() + ":" + d.getMinutes());
+		var days = ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
+		console.log("Сейчас " + days[d.getUTCDay()] + ", " + d.getUTCHours() + ":" + d.getUTCMinutes()); //time doesnt work correctlly
 	}
 	
-	function CreateRequest() {
-		var sity = document.getElementById('sity').value;
+	function CreateRequest(city) {
+		// var city = document.getElementById('city').value;
 	
-		var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + sity + '&units=metric&mode=JSON&APPID=b5840fb02191b2f29af7bcb95b9a7eb8';
-		// var requestURL = 'https://api.openweathermap.org/data/2.5/weather?q=Moscow&units=metric&mode=JSON&APPID=b5840fb02191b2f29af7bcb95b9a7eb8';
+		if (city == "") {
+			return ;
+		}
+
+		var requestURL = 'http://api.openweathermap.org/data/2.5/weather?q='
+			+ city + '&appid=86c0cb2383f69fc2f22f63961ba83dc8&units=metric&lang=ru';
 		var request = new XMLHttpRequest();
 		request.open('GET', requestURL);
 		request.responseType = 'json';
@@ -36,21 +88,39 @@ body {font-family: 'Tinos', serif;}
 		request.onload = function() {
 			var json = request.response;
 			console.log(json);
-			GetDate();
-			console.log("Your sity is " + json['name']);
-			console.log("Your current temperature is " + json['main']['temp']);
+			
+			if (json.cod == 404) {
+				console.log("Такой город не найден :(");
+				return ;
+			}
+			
+			GetDate(json['dt']);
+			console.log(json['name']);
+			console.log(json['main']['temp']); // added img
+			// console.log(json['weather']['0']['main']);
+			console.log(json['weather']['0']['description']);
+			console.log("Скорость ветра " + json['wind']['speed']);
 		}
 	}
 
 	function KeyProcessing() {
-		var input = document.getElementById("sity");
+		var input = document.getElementById("city");
 		if (input != null) {
-			input.addEventListener("keyup", function(event) {
+			input.addEventListener("keydown", function(event) {
 			  if (event.keyCode === 13) {
 				  CreateRequest();
 			  }
-			}); 
+			});
 		}
+	}
+
+	function GetCityValue() {
+		// var input = document.getElementById("start");
+			// input.addEventListener("click", function(event) {
+				var city = prompt('В каком городе вы живете?', 'Москва');
+				CreateRequest(city);
+		// });
+		// }
 	}
 </script>
 </html>
