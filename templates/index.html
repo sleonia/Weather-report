@@ -51,29 +51,20 @@
 <script>
 	
 	function GetDate(time) {
-// 		var unix_timestamp = 1586890468
-// // Create a new JavaScript Date object based on the timestamp
-// // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-// var date = new Date(unix_timestamp * 1000);
-// // Hours part from the timestamp
-// var hours = date.getHours();
-// // Minutes part from the timestamp
-// var minutes = "0" + date.getMinutes();
-// // Seconds part from the timestamp
-// var seconds = "0" + date.getSeconds();
+	var date = new Date(time * 1000);
+	var hours = date.getHours();
+	var minutes = "0" + date.getMinutes();
+	var seconds = "0" + date.getSeconds();
 
-// // Will display time in 10:30:23 format
-// var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+	var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-console.log(formattedTime);
+	console.log(formattedTime);
 		var d = new Date();
 		var days = ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
 		console.log("Сейчас " + days[d.getUTCDay()] + ", " + d.getUTCHours() + ":" + d.getUTCMinutes()); //time doesnt work correctlly
 	}
 	
 	function CreateRequest(city) {
-		// var city = document.getElementById('city').value;
-	
 		if (city == "") {
 			return ;
 		}
@@ -94,10 +85,9 @@ console.log(formattedTime);
 				return ;
 			}
 			
-			GetDate(json['dt']);
+			// GetDate(json['dt']);
 			console.log(json['name']);
 			console.log(json['main']['temp']); // added img
-			// console.log(json['weather']['0']['main']);
 			console.log(json['weather']['0']['description']);
 			console.log("Скорость ветра " + json['wind']['speed']);
 		}
@@ -121,6 +111,25 @@ console.log(formattedTime);
 				CreateRequest(city);
 		// });
 		// }
+		RemoveStartButton();
+	}
+
+	function RemoveStartButton() {
+		var button = document.getElementById("start");
+		if (button != null) {
+			button.remove();
+		}
+		// CreateStartButton();
+	}
+
+	function CreateStartButton() {
+		var button = document.createElement("button");
+		button.id = "pog";
+		// button.id = "start";
+		button.innerText = "Узнать погоду2";
+		document.body.append(button);
+		button.onclick(GetCityValue());
+		// button.onclick(alert());
 	}
 </script>
 </html>
