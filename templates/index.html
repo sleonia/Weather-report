@@ -2,25 +2,22 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+		<!-- <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'> -->
 		<style type="text/css">
 
 			html, body {
 				background-image: linear-gradient(to bottom, rgba(105,0,173,1), rgba(71,34,195,1));
 				background-repeat: no-repeat;
-				height: 100%;
-			    background-repeat: no-repeat;
 			    background-attachment: fixed;
-			    margin: 0;
+				/* height: 100%; */
+			    /* margin: 0; */
+				font-family: Roboto;
+				/* font-family: 'Andale Mono, monospace'; */
 			}
 
-			body {
-				font-family: 'Raleway';
-			}
-
-			#background {
-				position:absolute; z-index:0; width:100%; height:100%;
-			}
+			/* #background { */
+				/* position:absolute; z-index:0; width:100%; height:100%; */
+			/* } */
 
 			#start {
 				background-color: whitesmoke;
@@ -39,14 +36,64 @@
 				overflow-x:hidden;
 				font-size: calc(1em + 1vw);
 			}
+
+			#main {
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				color: whitesmoke;
+				/* font-size: calc(2em + 2vw); */
+			}
+
+			#logo {
+				color: white;
+				width: 2%;
+				height: 2%;
+			}
+
+			#time {
+				margin-top: 5%;
+				text-align: center;
+				/* margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0; */
+				font-size: calc(8em + 8vw);
+			}
+
+			#date {
+				color: rgb(185, 185, 185);
+				margin-top: -15%;
+				text-align: center;
+				font-size: calc(0.5em + 0.5vw);
+			}
+
+			#weather {
+				text-align: center;
+				/* margin-top: -15%; */
+				font-size: calc(1em + 1vw);
+			}
+
+			#city {
+				color: rgb(185, 185, 185);
+				font-size: calc(0.5em + 0.5vw);
+				margin-top: 12%;
+				text-align: center;
+			}
+			
 </style>
 </head>
 <body>
-	<button id="start" onclick="GetCityValue()">Узнать погоду</button>
-	<!-- <div id="main">
-		<input type="text" size="40" id="city" onkeydown="KeyProcessing()">
-		<input type="submit" value="Send" onclick="CreateRequest()">
-	</div> -->
+	<div id="main">
+		<img src="menu.svg" id="logo">
+		<p id="time">11 31 12</p>
+		<p id="date">Cуббота, 15 апреля</p>
+		<p id="weather">+15 пасмурно</p>
+		<p id="city">Москва</p>
+	</div>
+
+	<!-- <button id="start" onclick="GetCityValue()">Узнать погоду</button> -->
 </body>
 <script>
 	
@@ -131,5 +178,7 @@
 		button.onclick(GetCityValue());
 		// button.onclick(alert());
 	}
+
+	// function Create
 </script>
 </html>
