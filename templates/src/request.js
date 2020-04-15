@@ -8,7 +8,6 @@ function CreateRequest(city) {
 
 	request.onload = function() {
 		var json = request.response;
-		console.log(json);
 		
 		if (json.cod == 404) {
 			CreateErrorTag('Такой город не найден :(');

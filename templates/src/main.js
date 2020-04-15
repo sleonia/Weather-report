@@ -3,9 +3,8 @@ function GetCityValue() {
 
 	if (city == null) {
 		CreateErrorTag('Такой город не найден :(');
-		RemoveStartButton();
 	} else {
 		CreateRequest(city);
-		RemoveStartButton();
 	}
+	RemoveStartButton();
 }

@@ -60,7 +60,7 @@ function CreateMenuImg() {
 	return img;
 }
 
-function CreateWeatherDiv(main_div, temp, description) {
+function CreateWeatherDiv(temp, description) {
 
 	var sub_div = document.createElement("div");
 	sub_div.id = "current_weather";
@@ -84,28 +84,28 @@ function CreateMainDiv(json) {
 	var div = document.createElement("div");
 	div.id = "main";
 
-	var img = CreateMenuImg();
+	var menu_img = CreateMenuImg();
 
-	var p1 = document.createElement("p");
-	p1.id = "time";
-	p1.innerText = GetTime(json['dt']);
+	var time = document.createElement("p");
+	time.id = "time";
+	time.innerText = GetTime(json['dt']);
 
-	var p2 = document.createElement("p");
-	p2.id = "date";
-	p2.innerText = GetDate(json['dt']);
+	var weather = document.createElement("p");
+	weather.id = "date";
+	weather.innerText = GetDate(json['dt']);
 
-	var sub_div = CreateWeatherDiv(div, json['main']['temp'],
+	var sub_div = CreateWeatherDiv(json['main']['temp'],
 									json['weather']['0']['description']);
 
-	var p4 = document.createElement("p");
-	p4.id = "city";
-	p4.innerText = json['name'];
+	var city = document.createElement("p");
+	city.id = "city";
+	city.innerText = json['name'];
 
 	document.body.append(div);
 
-	document.getElementById('main').appendChild(img); 
-	document.getElementById('main').appendChild(p1); 
-	document.getElementById('main').appendChild(p2); 
+	document.getElementById('main').appendChild(menu_img); 
+	document.getElementById('main').appendChild(time); 
+	document.getElementById('main').appendChild(weather); 
 	document.getElementById('main').appendChild(sub_div); 
-	document.getElementById('main').appendChild(p4); 
+	document.getElementById('main').appendChild(city); 
 }
