@@ -31,9 +31,7 @@ function ParseDescription(description) {
 		img.src = "/static/img/snowy.svg";
 	} else if (description.search('дождь') != -1) {
 		img.src = "/static/img/rainy.svg";			
-	} else if (description.search('обл') != -1
-		|| description.search('пасмурно'))
-	{
+	} else {
 		img.src = "/static/img/cloud.svg";			
 	}
 
