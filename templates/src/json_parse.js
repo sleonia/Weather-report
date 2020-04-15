@@ -15,15 +15,18 @@ function GetDate(time) {
 	
 
 	function ParseDescription(description) {
-		if (description.search('пасмурно') != -1) {
-			;
-		} else if (description.search('ясно') != -1) {
-			;
+		var img = document.createElement("img");
+		img.id = "weather_icon";
+
+		if (description.search('ясно') != -1) {
+			img.src = "img/sun.svg";
 		} else if (description.search('снег') != -1) {
-			;
+			img.src = "img/snowy.svg";
 		} else if (description.search('дождь') != -1) {
-			
+			img.src = "img/rainy.svg";			
 		} else if (description.search('обл') != -1
 			|| description.search('пасмурно')) {
+			img.src = "img/cloud.svg";			
 		}
+		return img;
 	}
