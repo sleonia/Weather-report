@@ -46,7 +46,6 @@ function CreateErrorTag(text) {
 
 function CreateMenuImg() {
 	if (document.getElementById("menu") != null) {
-		// return ;
 		return document.createElement("img");
 	}
 	var img = document.createElement("img");
@@ -66,17 +65,12 @@ function CreateWeatherDiv(main_div, temp, description) {
 	var sub_div = document.createElement("div");
 	sub_div.id = "current_weather";
 
-	// var img = document.createElement("img");
-	// img.src = ParseDescription(description);
-	// img.id = "weather_icon";
 	var img = ParseDescription(description);
 
 	var p = document.createElement("p");
-	var temp = parseInt(temp) > 0 ? '+' + temp : temp; 
+	var temp = parseInt(temp) > 0 ? '+' + Math.round(temp) : Math.round(temp);
 	p.id = "weather";
-	
 	p.innerText = temp;
-	// p.innerText = temp + ', ' + description;
 	
 	sub_div.append(img);
 	sub_div.append(p);
@@ -94,15 +88,14 @@ function CreateMainDiv(json) {
 
 	var p1 = document.createElement("p");
 	p1.id = "time";
-	p1.innerText = '11 31 12';
+	p1.innerText = GetTime(json['dt']);
 
 	var p2 = document.createElement("p");
 	p2.id = "date";
-	p2.innerText = 'Суббота, 1 апреля';
+	p2.innerText = GetDate(json['dt']);
 
 	var sub_div = CreateWeatherDiv(div, json['main']['temp'],
 									json['weather']['0']['description']);
-	// var img2 = ParseDescription(json['weather']['0']['description']);
 
 	var p4 = document.createElement("p");
 	p4.id = "city";

@@ -1,19 +1,28 @@
 function GetDate(time) {
 	var date = new Date(time * 1000);
-	var hours = date.getHours();
-	var minutes = "0" + date.getMinutes();
-	var seconds = "0" + date.getSeconds();
+	// var hours = date.getHours();
+	// var minutes = "0" + date.getMinutes();
+	// var seconds = "0" + date.getSeconds();
 
-	var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-
-	console.log(formattedTime);
 		var d = new Date();
 		var days = ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
-		console.log("Сейчас " + days[d.getUTCDay()] + ", " + d.getUTCHours() + ":" + d.getUTCMinutes()); //time doesnt work correctlly
+		var month = ["января","февраля","марта","апреля",
+					"мая","июня","июля", "августа",
+					"сентября", "октября", "ноября", "декабря"];
+		return days[d.getUTCDay()] + ", " + d.getUTCDate() + " " + month[d.getUTCMonth()];
+}
+
+function GetTime(time) {
+	var date = new Date(time * 1000);
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var seconds = date.getSeconds();
+
+		// return hours + ':' + minutes + ':' + seconds;
+		return hours + "  " + minutes + "  " + seconds;
+		// return hours + '  ' + minutes + '  ' + seconds;
 	}
 	
-	
-
 	function ParseDescription(description) {
 		var img = document.createElement("img");
 		img.id = "weather_icon";
@@ -29,4 +38,4 @@ function GetDate(time) {
 			img.src = "img/cloud.svg";			
 		}
 		return img;
-	}
+}
