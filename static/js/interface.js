@@ -49,7 +49,7 @@ function CreateMenuImg() {
 		return document.createElement("img");
 	}
 	var img = document.createElement("img");
-	img.src = "img/menu.svg";
+	img.src = "/static/img/menu.svg";
 	img.id = "menu";
 
 	img.addEventListener("click", function Reload() {

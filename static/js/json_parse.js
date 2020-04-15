@@ -26,15 +26,15 @@ function ParseDescription(description) {
 	img.id = "weather_icon";
 
 	if (description.search('ясно') != -1) {
-		img.src = "img/sun.svg";
+		img.src = "/static/img/sun.svg";
 	} else if (description.search('снег') != -1) {
-		img.src = "img/snowy.svg";
+		img.src = "/static/img/snowy.svg";
 	} else if (description.search('дождь') != -1) {
-		img.src = "img/rainy.svg";			
+		img.src = "/static/img/rainy.svg";			
 	} else if (description.search('обл') != -1
 		|| description.search('пасмурно'))
 	{
-		img.src = "img/cloud.svg";			
+		img.src = "/static/img/cloud.svg";			
 	}
 
 	return img;

@@ -2,13 +2,14 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="style/style.css"></style>
+		<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/style.css') }}"></style> -->
+		<link rel="stylesheet" type="text/css" href="/static/CSS/style.css"></style>
 </head>
 <body>
 	<button id="start" onclick="GetCityValue()">Узнать погоду</button>
 </body>
-	<script src="src/main.js"></script>
-	<script src="src/request.js"></script>
-	<script src="src/interface.js"></script>
-	<script src="src/json_parse.js"></script>
+	<script src="/static/js/main.js"></script>
+	<script src="/static/js/request.js"></script>
+	<script src="/static/js/interface.js"></script>
+	<script src="/static/js/json_parse.js"></script>
 </html>
