@@ -28,7 +28,7 @@ sudo apt-get install python3-dev python3-pip
 pip3 install --upgrade pip setuptools
 git clone https://github.com/sleonia/Weather-report SmartWeather
 cd SmartWeather
-python my_server
+python server.py
 Go to browser
+Check http://localhost:5000
 ```
-[**Link**](http://localhost:5000/)
