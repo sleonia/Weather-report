@@ -1,111 +1,4 @@
-<!DOCTYPE html >
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<!-- <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'> -->
-		<style type="text/css">
-
-			html, body {
-				background-image: linear-gradient(to bottom, rgba(105,0,173,1), rgba(71,34,195,1));
-				background-repeat: no-repeat;
-			    background-attachment: fixed;
-				/* height: 100%; */
-			    /* margin: 0; */
-				font-family: Roboto;
-				/* font-family: 'Andale Mono, monospace'; */
-			}
-
-			/* #background { */
-				/* position:absolute; z-index:0; width:100%; height:100%; */
-			/* } */
-
-			#start {
-				background-color: whitesmoke;
-				box-shadow: 5px 5px 5px #200347;
-				border-radius: 10px;
-				height: 10%;
-				width: 15%;
-
-				position: absolute;
-				margin-top: 15%;
-				margin-left: auto;
-				margin-right: auto;
-				left: 0;
-				right: 0;
-
-				overflow-x:hidden;
-				font-size: calc(1em + 1vw);
-			}
-
-			#main {
-				margin-left: auto;
-				margin-right: auto;
-				left: 0;
-				right: 0;
-				color: whitesmoke;
-				/* font-size: calc(2em + 2vw); */
-			}
-
-			#menu {
-				color: white;
-				width: 2%;
-				height: 2%;
-			}
-
-			#time {
-				margin-top: 5%;
-				text-align: center;
-				/* margin-left: auto;
-				margin-right: auto;
-				left: 0;
-				right: 0; */
-				font-size: calc(8em + 8vw);
-			}
-
-			#date {
-				color: rgb(185, 185, 185);
-				margin-top: -15%;
-				text-align: center;
-				font-size: calc(0.5em + 0.5vw);
-			}
-
-			#weather {
-				text-align: center;
-				/* margin-top: -15%; */
-				font-size: calc(1em + 1vw);
-			}
-
-			#city {
-				color: rgb(185, 185, 185);
-				font-size: calc(0.5em + 0.5vw);
-				margin-top: 12%;
-				text-align: center;
-			}
-			
-			#error {
-				margin-top: 15%;
-				font-size: calc(3em + 3vw);
-				text-align: center;
-				color: white;
-			}
-</style>
-</head>
-<body>
-	<!-- <div id="main"></div> -->
-	<!-- <div id="main">
-		<img src="menu.svg" id="menu">
-		<p id="time">11 31 12</p>
-		<p id="date">Cуббота, 15 апреля</p>
-		<p id="weather">+15 пасмурно</p>
-		<p id="city">Москва</p>
-	</div> -->
-	<!-- <p id="error">Такой город не найден :(</p> -->
-	<button id="start" onclick="GetCityValue()">Узнать погоду</button>
-</body>
-<script src="main.js"></script>
-
-<!-- <script>
-	function GetDate(time) {
+function GetDate(time) {
 	var date = new Date(time * 1000);
 	var hours = date.getHours();
 	var minutes = "0" + date.getMinutes();
@@ -120,10 +13,6 @@
 	}
 	
 	function CreateRequest(city) {
-		if (city == "") {
-			return ;
-		}
-
 		var requestURL = 'http://api.openweathermap.org/data/2.5/weather?q='
 			+ city + '&appid=86c0cb2383f69fc2f22f63961ba83dc8&units=metric&lang=ru';
 		var request = new XMLHttpRequest();
@@ -136,10 +25,10 @@
 			console.log(json);
 			
 			if (json.cod == 404) {
-				CreateErrorTag();
-				return ;
+				CreateErrorTag('Такой город не найден :(');
+			} else {
+				CreateMainDiv(json);			
 			}
-			CreateMainDiv(json);			
 		}
 	}
 
@@ -156,12 +45,29 @@
 		}
 	}
 
+	function RemoveErrorTag() {
+		var tag = document.getElementById("error");
+		if (tag != null) {
+			tag.remove();
+		}
+	}
+
+	function RemoveMainDiv() {
+		var div = document.getElementById("main");
+		if (div != null) {
+			div.remove();
+		}
+	}
+
 	function CreateStartButton() {
+		if (document.getElementById("error") != null) {
+			return ;
+		}
 		var button = document.createElement("button");
 		button.id = "start";
 		button.innerText = "Узнать погоду";
 		document.body.append(button);
-		button.onclick(GetCityValue());
+		button.addEventListener("click", GetCityValue);
 	}
 
 	function ParseDescription(description) {
@@ -178,26 +84,42 @@
 		}
 	}
 	
-	function CreateErrorTag() {
+	function CreateErrorTag(text) {
+		if (document.getElementById("error") != null) {
+			return ;
+		}
 		var img = CreateMenuImg();
 		document.body.append(img);
 
 		var p = document.createElement("p");
 		p.id = "error";
-		p.innerText = 'Такой город не найден :(';
+		p.innerText = text;
 		document.body.append(p);
 	}
 	
 	function CreateMenuImg() {
+		if (document.getElementById("menu") != null) {
+			return ;
+		}
 		var img = document.createElement("img");
 		img.src = "menu.svg";
 		img.id = "menu";
+		img.addEventListener("click", function Reload() {
+			RemoveMainDiv();
+			RemoveErrorTag();
+			CreateStartButton();
+		});
 		return img;
 	}
 
 	function CreateMainDiv(json) {
+		if (document.getElementById("div") != null) {
+			return ;
+		}
 		var div = document.createElement("div");
 		div.id = "main";
+
+		// var div = document.getElementById("div");
 
 		var img = CreateMenuImg();
 
@@ -227,6 +149,4 @@
 		document.getElementById('main').appendChild(p2); 
 		document.getElementById('main').appendChild(p3); 
 		document.getElementById('main').appendChild(p4); 
-	} -->
-<!-- </script> -->
-</html>
+	}
