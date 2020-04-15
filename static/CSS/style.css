@@ -21,7 +21,7 @@ html, body {
 	left: 0;
 	right: 0;
 	overflow-x:hidden;
-	font-size: calc(1em + 1vw);
+	font-size: calc(0.8em + 0.8vw);
 }
 
 #main {
@@ -41,7 +41,7 @@ html, body {
 #time {
 	margin-top: -2%;
 	text-align: center;
-	font-size: calc(9em + 9vw);
+	font-size: calc(7em + 7vw);
 }
 
 #date {
@@ -75,15 +75,15 @@ html, body {
 
 #weather {
 	float: right;
-	margin-right: 20%;
+	margin-right: 40%;
 	margin-top: 11%;
 	font-size: calc(3em + 3vw);
 }
 
 #weather_icon {
 	float: left;
-	width: 60%;
-	height: 60%;
+	width: 50%;
+	height: 50%;
 	margin-left: -25%;
 	margin-top: -10%;
 	color: white;
