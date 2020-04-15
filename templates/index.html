@@ -46,7 +46,7 @@
 				/* font-size: calc(2em + 2vw); */
 			}
 
-			#logo {
+			#menu {
 				color: white;
 				width: 2%;
 				height: 2%;
@@ -82,21 +82,27 @@
 				text-align: center;
 			}
 			
+			#error {
+				margin-top: 15%;
+				font-size: calc(3em + 3vw);
+				text-align: center;
+				color: white;
+			}
 </style>
 </head>
 <body>
-	<div id="main">
-		<img src="menu.svg" id="logo">
+	<!-- <div id="main">
+		<img src="menu.svg" id="menu">
 		<p id="time">11 31 12</p>
 		<p id="date">Cуббота, 15 апреля</p>
 		<p id="weather">+15 пасмурно</p>
 		<p id="city">Москва</p>
-	</div>
-
-	<!-- <button id="start" onclick="GetCityValue()">Узнать погоду</button> -->
+	</div> -->
+	<!-- <p id="error">Такой город не найден :(</p> -->
+	<button id="start" onclick="GetCityValue()">Узнать погоду</button>
 </body>
+<!-- <script src="main.js"></script> -->
 <script>
-	
 	function GetDate(time) {
 	var date = new Date(time * 1000);
 	var hours = date.getHours();
@@ -128,36 +134,16 @@
 			console.log(json);
 			
 			if (json.cod == 404) {
-				console.log("Такой город не найден :(");
+				CreateErrorTag();
 				return ;
 			}
-			
-			// GetDate(json['dt']);
-			console.log(json['name']);
-			console.log(json['main']['temp']); // added img
-			console.log(json['weather']['0']['description']);
-			console.log("Скорость ветра " + json['wind']['speed']);
-		}
-	}
-
-	function KeyProcessing() {
-		var input = document.getElementById("city");
-		if (input != null) {
-			input.addEventListener("keydown", function(event) {
-			  if (event.keyCode === 13) {
-				  CreateRequest();
-			  }
-			});
+			CreateMainDiv(json);			
 		}
 	}
 
 	function GetCityValue() {
-		// var input = document.getElementById("start");
-			// input.addEventListener("click", function(event) {
-				var city = prompt('В каком городе вы живете?', 'Москва');
-				CreateRequest(city);
-		// });
-		// }
+		var city = prompt('В каком городе вы живете?', 'Москва');
+		CreateRequest(city);
 		RemoveStartButton();
 	}
 
@@ -166,19 +152,79 @@
 		if (button != null) {
 			button.remove();
 		}
-		// CreateStartButton();
 	}
 
 	function CreateStartButton() {
 		var button = document.createElement("button");
-		button.id = "pog";
-		// button.id = "start";
-		button.innerText = "Узнать погоду2";
+		button.id = "start";
+		button.innerText = "Узнать погоду";
 		document.body.append(button);
 		button.onclick(GetCityValue());
-		// button.onclick(alert());
 	}
 
-	// function Create
+	function ParseDescription(description) {
+		if (description.search('пасмурно') != -1) {
+			;
+		} else if (description.search('ясно') != -1) {
+			;
+		} else if (description.search('снег') != -1) {
+			;
+		} else if (description.search('дождь') != -1) {
+			
+		} else if (description.search('обл') != -1
+			|| description.search('пасмурно')) {
+		}
+	}
+	
+	function CreateErrorTag() {
+		var img = CreateMenuImg();
+		document.body.append(img);
+
+		var p = document.createElement("p");
+		p.id = "error";
+		p.innerText = 'Такой город не найден :(';
+		document.body.append(p);
+	}
+	
+	function CreateMenuImg() {
+		var img = document.createElement("img");
+		img.src = "menu.svg";
+		img.id = "menu";
+		return img;
+	}
+
+	function CreateMainDiv(json) {
+		var div = document.createElement("div");
+		div.id = "main";
+
+		var img = CreateMenuImg();
+
+		var p1 = document.createElement("p");
+		p1.id = "time";
+		p1.innerText = '11 31 12';
+
+		var p2 = document.createElement("p");
+		p2.id = "date";
+		p2.innerText = 'Суббота, 1 апреля';
+
+		var p3 = document.createElement("p");
+		var temp = parseInt(json['main']['temp']) > 0
+				? '+' + json['main']['temp']
+				: json['main']['temp']; 
+		p3.id = "weather";
+		
+		p3.innerText = temp + ' ' + json['weather']['0']['description'];
+
+		var p4 = document.createElement("p");
+		p4.id = "city";
+		p4.innerText = json['name'];
+
+		document.body.append(div);
+		document.getElementById('main').appendChild(img); 
+		document.getElementById('main').appendChild(p1); 
+		document.getElementById('main').appendChild(p2); 
+		document.getElementById('main').appendChild(p3); 
+		document.getElementById('main').appendChild(p4); 
+	}
 </script>
 </html>
