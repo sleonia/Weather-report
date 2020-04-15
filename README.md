@@ -5,9 +5,13 @@
 ##### Средний уровень сложности
 
 ---
-### Описание сервиса
+### Проектирование
 
-##### Cервис представляет собой веб-приложение, реализованное на на стеке frontend(*html*+*css*+*js*) backend(*python flask*)
+##### Язык
+    *frontend(*html*+*css*+*js*) backend(*python flask*)
+
+##### Интерфейс
+    *web приложение
 
 ##### Пользователь нажимает кнопку, вводит названия своего города и в ответ получает страницу с данными о времени, дате, погоде и городе. ![Output_for_user](https://github.com/sleonia/Weather-report/blob/master/assets/Output_for_user.png)
 
@@ -24,8 +28,7 @@
 ### Как запустить?
 #### *Linux, Mac OS X*
 ```
-sudo apt-get install python3-dev python3-pip
-pip3 install --upgrade pip setuptools
+https://flask-russian-docs.readthedocs.io/ru/latest/installation.html
 git clone https://github.com/sleonia/Weather-report SmartWeather
 cd SmartWeather
 python server.py
